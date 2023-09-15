@@ -5,24 +5,25 @@ date: "2023-10-24"
 
 ## About
 
-[![](r_pharma_logo.png)](https://rinpharma.com/)
+[![](smdi_hexagon.png)] [![](r_pharma_logo.png)](https://rinpharma.com/)
 
 This repository hosts the quarto revealjs presentation of the `smdi` package presented at the **R/Pharma conference 2023**
 
 ## Presentation Details
 
 -   Title: `Introducing smdi: An R package to perform structural missing data investigations for real-world evidence studies`
--   ID: NESS2023-IS-20
 -   Date: October 24-26
 -   Venue: <https://rinpharma.com/>
 
-The presentation can be accessed at:
+The presentation and more materials can be accessed at:
 
--   Vignettes/tutorials: [janickweberpals.gitlab-pages.partners.org/smdi](https://janickweberpals.gitlab-pages.partners.org/smdi)
+-   Website (vignettes/articles): [janickweberpals.gitlab-pages.partners.org/smdi](https://janickweberpals.gitlab-pages.partners.org/smdi)
 
--   Presentation repository: <https://gitlab-scm.partners.org/drugepi/smdi-r-pharma-2023>
+-   Presentation slides: [drugepi.gitlab-pages.partners.org/smdi-r-pharma-2023/smdi-r-pharma2023.html](https://drugepi.gitlab-pages.partners.org/smdi-r-pharma-2023/smdi-r-pharma2023.html)
 
--   Presentation slides: [drugepi.gitlab-pages.partners.org/smdi-r-pharma-2023/smdi-r-pharma-2023.html](drugepi.gitlab-pages.partners.org/smdi-r-pharma-2023/smdi-r-pharma-2023.html#/title-slide)
+-   Presentation repository: 
+    -   [gitlab-scm.partners.org/drugepi/NESS2023](https://gitlab-scm.partners.org/drugepi/smdi-r-pharma-2023)
+    -   [github.com/janickweberpals/smdi-R-Pharma2023](https://github.com/janickweberpals/smdi-R-Pharma2023)
 
 ## Abstract
 
