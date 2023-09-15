@@ -85,6 +85,7 @@ running the following command:
     ## │   └── staging
     ## ├── renv.lock
     ## ├── smdi-r-pharma2023.qmd
+    ## ├── smdi_draft_r_pharma2023.pdf
     ## ├── smdi_hexagon.png
     ## ├── styles.css
     ## └── update_README.R
