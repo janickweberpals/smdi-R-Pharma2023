@@ -1,0 +1,431 @@
+---
+title: "`smdi`"
+subtitle: "An R package to perform structural missing data investigations for real-world evidence studies"
+date: "October 24, 2023"
+date-format: long
+author:
+  - name: Janick Weberpals, RPh, PhD
+    corresponding: true
+    orcid: 0000-0003-0404-7394
+    email: jweberpals@bwh.harvard.edu
+    url: janickweberpals.github.io
+    affiliations:
+      - name: Division of Pharmacoepidemiology and Pharmacoeconomics <br> Brigham and Women's Hospital <br> Harvard Medical School
+        address: 1620 Tremont Street
+        city: Boston
+        state: MA
+        postal-code: 02120
+format:
+  revealjs:
+    theme: default
+    echo: true
+    embed-resources: true # self-contained html
+    reference-location: document # any citation will appear at the end
+    slide-number: true
+    auto-stretch: true
+    smaller: true
+    toc: true
+    toc-depth: 1
+    logo: smdi_hexagon.png
+    css: styles.css
+    footer: smdi - An R package to perform routine structural missing data investigations in real-world data
+bibliography: references.bib
+csl: epidemiology.csl
+---
+
+```{r}
+#| label: setup
+#| include: false
+
+library(tidyverse)
+library(smdi)
+```
+
+
+## Disclosures
+
+::: callout-warning
+## Disclosures
+
+-   Janick Weberpals reports prior employment by Hoffmann-La Roche and previously held shares in Hoffmann-La Roche
+-   This project was supported by Task Order 75F40119F19002 under Master Agreement 75F40119D10037 from the U.S. Food and Drug Administration (FDA)
+:::
+
+## Background
+
+Administrative insurance claims databases are increasingly linked to **electronic health records (EHR)** to improve confounding adjustment for variables which cannot be measured in administrative claims
+
+::: callout-note
+# Examples:
+
+-   Labs (HbA1c, LDL, etc.)
+-   Vitals (Blood pressure, BMI, etc.)
+-   Disease-specific data (cancer stage, biomarkers, etc.)
+-   Physician assessments (ECOG, etc.)
+-   Lifestyle factors (smoking, alcohol, etc.)
+
+These covariates are often just partially observed for various reasons:
+
+-   Physician did not perform/order a certain test
+-   Certain measurements are just collected for particularly sick patients
+-   Information is 'hiding' in unstructured records, e.g. clinical notes
+:::
+
+## Knowledge gaps and objectives
+
+Missing data in confounding factors are frequent
+
+::: callout-note
+# Two common missing data taxonomies
+
+-   **Mechanisms**: Missing completely at random (MCAR), at random (MAR) and not at random (MNAR)
+-   **Patterns**: Monotone, Non-monotone
+:::
+
+Unresolved challenges for `causal inference`:
+
+-   In an empirical study, it is usually unclear which of the missing data patterns and mechanisms are dominating.
+-   What covariate relationships exist and are partially observed covariates recoverable **in high-dimensional covariate spaces (e.g., database linkages)**?
+
+## Objectives
+
+::: callout-tip
+# Objectives of the Sentinel Innovation Center Causal Inference Workstream
+
+-   Develop a framework and tools to assess the structure of missing data processes in EHR studies
+-   Connect this with the most appropriate analytical approach, followed by sensitivity analyses
+-   **Develop an `R package` to implement framework and missing data investigations on a routine basis**\
+:::
+
+![](images/ci3.png){fig-align="center"}
+
+## Assumed missingness structures
+
+![Causal diagrams/M-graphs[@choi2019; @mohan2021] provide a more natural way to understand the assumptions regarding missing (confounder) data for a given research question, Legend: a) Missing completely at random (MCAR), b) Missing at random (MAR), c) Missing not at random 1 (MNAR unmeasured), d) Missing not at random 2 (MNAR value), Notation: E = Exposure, Y = Outcome, C1 = Fully observed confounders, C = Confounder of interest, C_obs = Observed portion of C, M = Missingness indicator](images/dag.jpeg){fig-align="center" width="50%"}
+
+## Missing data diagnostics
+
+![](images/diagnostics.png){fig-align="center"}
+
+## Plasmode simulation - results
+
+::: callout-tip
+# Observations
+
+-   Large scale simulation revealed characteristic patterns of the diagnostic parameters matched to missing data structure
+-   The observed diagnostic pattern of a specific study will give insights into the likelihood of underlying missingness structures
+:::
+
+![Plasmode simulation results averaged across all scenarios and simulated datasets.](images/results.png){fig-align="center"}
+
+## Plasmode simulation - results
+
+![The observed diagnostic pattern of a specific study will give insights into the likelihood of underlying missingness structures](images/results_example1.png){fig-align="center"}
+
+## Plasmode simulation - results
+
+![The observed diagnostic pattern of a specific study will give insights into the likelihood of underlying missingness structures](images/results_example2.png){fig-align="center"}
+
+<!-- smdi package-specific slides start -->
+
+------------------------------------------------------------------------
+
+**The whole game** - `smdi` workflow to perform routine missing data diagnostics
+
+![Suggested `smdi` workflow.](images/workflow.jpg){fig-align="center"}
+
+
+## `smdi` bundled datasets
+
+-   The `smdi` package comes with two exemplary **simulated** datasets:
+    -   `smdi_data` (includes some partially observed covariates)
+    -   `smdi_data_complete` (complete dataset if you prefer to introduce `NA` yourself)
+
+```{r}
+smdi_data |> 
+  glimpse()
+```
+
+## Descriptives
+
+-   Let's start with some light descriptives
+-   All `smdi` functions automatically include all variables with at least one missing value (default)
+-   Investigator-specified variables can be selected via the `covar` parameter
+
+```{r}
+smdi_data |> 
+  smdi_summarize()
+```
+
+<!-- ## Descriptives - visual -->
+
+<!-- Overall -->
+
+<!-- ```{r} -->
+<!-- smdi_data |>  -->
+<!--   smdi_vis() -->
+<!-- ``` -->
+
+<!-- ## Descriptives - visual -->
+
+<!-- Stratified by another variable (stratum-specific sample size is the denominator) -->
+
+<!-- ```{r} -->
+<!-- smdi_data |>  -->
+<!--   smdi_vis(strata = "exposure") -->
+<!-- ``` -->
+
+## Descriptives - pattern
+
+`smdi` uses a *re-export* of the **naniar**[@naniar] `gg_miss_upset` and **mice**[@mice] `md.pattern` functions to investigate potentially underlying **missing data patterns**
+
+::: callout-note
+*Monotone and non-monotone (or general)*. A missing data pattern is said to be *monotone* if the variables $Y_j$ can be ordered such that if $Y_j$ is missing then all variables $Y_k$ with $k>j$ are also missing. This occurs, for example, in longitudinal studies with drop-out. If the pattern is not monotone, it is called *non-monotone* or *general*.[@mice]
+:::
+
+## Descriptives - pattern
+
+`smdi` uses a *re-export* of the **naniar**[@naniar] `gg_miss_upset` function to investigate potentially underlying **missing data patterns**
+
+```{r}
+smdi_data |>  
+  gg_miss_upset()
+```
+
+## `smdi_asmd`
+
+> Group 1 diagnostics: Differences in covariate distributions
+
+```{r}
+asmd <- smdi_asmd(data = smdi_data, median = TRUE, includeNA = FALSE)
+asmd
+```
+
+## `smdi_asmd`
+
+> Group 1 diagnostics: Differences in covariate distributions
+
+```{r}
+asmd <- smdi_asmd(data = smdi_data, median = TRUE, includeNA = FALSE)
+asmd
+```
+
+The output returns an *asmd* object with much more information than what is captured in the S3 generic *print* output, e.g. a complete '*Table 1*' that displays the covariate distributions of patients:
+
+```{r}
+head(asmd$pdl1_num$asmd_table1)
+```
+
+## `smdi_asmd`
+
+> Group 1 diagnostics: Differences in covariate distributions
+
+Investigators can also inspect standardized mean differences[@Austin2019] by covariate in detail:
+
+```{r}
+asmd$pdl1_num$asmd_plot
+```
+
+## `smdi_hotelling`
+
+> Group 1 diagnostics: Differences in covariate distributions
+
+Hotelling's[@hotelling1931] multivariate t-test examines differences in covariate distributions conditional on having an observed covariate value or not. Rejection of $H0$ would indicate significant differences between these patient strata.
+
+```{r}
+smdi_hotelling(data = smdi_data)
+```
+
+## `smdi_little`
+
+> Group 1 diagnostics: Differences in covariate distributions
+
+Little's[@little1988] chi-square test takes into account possible patterns of missingness **across all variables** in the dataset. A high test statistics and low p-value (rejection of $H0$) would indicate that the **global** missing data generating mechanism is not completely at random.
+
+```{r}
+smdi_little(data = smdi_data)
+```
+
+## `smdi_rf`
+
+> Group 2 diagnostics: Ability to predict missingness
+
+The `smdi_rf` function trains and fits a random forest model to assess the ability to predict missingness for the specified covariate(s).[@sondhi]
+
+```{r}
+auc <- smdi_rf(data = smdi_data, train_test_ratio = c(.7, .3), set_seed = 42, n_cores = 3)
+auc
+```
+
+::: callout-tip
+## Parallelization
+
+Depending on the amount of data (sample size x covariates), the computation of the function can take some minutes. To speed this up, investigators can parallelize the computation using `n_cores` (UNIX only).
+:::
+
+## `smdi_rf`
+
+The resulting `smdi_rf` object provides the flexibility to investigate the covariate importance of predictors which can give important hints on the potentially underlying missing data generating mechanism.
+
+```{r}
+auc$ecog_cat$rf_plot
+```
+
+## `smdi_outcome`
+
+Group 3 diagnostic focuses on assessing the association between the missing indicator of the partially observed covariate and the outcome under study (is the missingness differential?).
+
+```{r}
+outcome <- smdi_outcome(
+  data = smdi_data,  
+  model = "cox",
+  form_lhs = "Surv(eventtime, status)",
+  exponentiated = FALSE
+  )
+
+outcome
+```
+
+::: callout-warning
+## Supported regression types
+
+Currently, the main types of outcome regressions are supported, namely *logistic (`glm`)*, *linear (`lm`)* and *Cox proportional hazards (`survival`)* models are supported and need to be specified using the model and form_lhs.
+:::
+
+## `smdi_diagnose`
+
+::: callout-tip
+## One function to rule them all: `smdi_diagnose`
+
+-   Wrapper around all of the aforementioned functions
+-   Input parameters correspond to parameters of the individual functions
+:::
+
+Let's take a look at a most minimal example
+
+```{r}
+diagnostics <- smdi_diagnose(
+  data = smdi_data,
+  model = "cox",
+  form_lhs = "Surv(eventtime, status)",
+  n_cores = 3
+  )
+
+diagnostics
+```
+
+## `smdi_diagnose`
+
+Output is a list that resembles all three group diagnostics validated in the plasmode simulation study...
+
+Covariate-specific table:
+
+```{r}
+diagnostics$smdi_tbl
+```
+
+Global Little's test p-value:
+
+```{r}
+diagnostics$p_little
+```
+
+## `smdi_style_gt`
+
+`smdi_style_gt` takes an object of class *smdi* (i.e., the output of `smdi_diagnose`) and formats it into a **publication-ready** `gt` table:
+
+```{r}
+diagnostics |> 
+  smdi_style_gt(font_size = 18, tbl_width = 1000)
+```
+
+## `smdi_style_gt`
+
+Since `smdi_style_gt` transforms the *smdi* object into an object of class *gt_tbl*, an investigator can also take advantage of all of the `gt` package perks, e.g. exporting the table in different formats, e.g. .docx, .rtf, .pdf, etc.:
+
+```{r}
+#| eval: false
+gtsave(
+  data = smdi_style_gt(diagnostics),
+  filename = "smdi_table.docx", # name of the final file and file type (e.g., .docx)
+  path = "." # path where the file should be stored
+  )
+```
+
+## Test it out yourself
+
+```{r}
+#| eval: false
+
+# CRAN (current version: 0.2.2)
+install.packages("smdi")
+
+# dev version
+devtools::install_git("https://gitlab-scm.partners.org/janickweberpals/smdi.git")
+```
+
+-   Website (vignettes/articles): [janickweberpals.gitlab-pages.partners.org/smdi](https://janickweberpals.gitlab-pages.partners.org/smdi)
+
+-   Presentation slides: [drugepi.gitlab-pages.partners.org/smdi-r-pharma-2023/smdi-r-pharma2023.html](https://drugepi.gitlab-pages.partners.org/smdi-r-pharma-2023/smdi-r-pharma2023.html)
+
+-   Presentation repository: 
+    -   [gitlab-scm.partners.org/drugepi/NESS2023](https://gitlab-scm.partners.org/drugepi/smdi-r-pharma-2023)
+    -   [github.com/janickweberpals/smdi-R-Pharma2023](https://github.com/janickweberpals/smdi-R-Pharma2023)
+
+## Acknowledgments
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+::: {.callout-note icon=false}
+## Mass General Brigham
+-   Rishi J. Desai
+-   Robert J. Glynn
+-   Shamika More
+-   Luke Zabotka
+:::
+
+::: {.callout-note icon=false}
+## Duke
+-   Sudha R. Raman
+-   Bradley G. Hammill
+:::
+
+::: {.callout-note icon=false}
+## Kaiser WA
+-   Pamela A. Shaw
+:::
+
+:::
+
+::: {.column width="50%"}
+
+::: {.callout-note icon=false}
+## Harvard Pilgrim/SOC
+-   Darren Toh
+-   John G. Connolly
+-   Kimberly J. Dandreo Gegear
+:::
+
+::: {.callout-note icon=false}
+## FDA
+-   Fang Tian
+-   Wei Liu
+-   Hana Lee
+-   Jenni Li
+-   José J. Hernández-Muñoz
+:::
+
+:::
+
+::: 
+
+## References
+
+::: callout-note
+# References cited in this presentation
+
+::: {#refs}
+:::
+:::

@@ -1,0 +1,47 @@
+---
+title: "Presentation of `smdi` package @ **R/Pharma 2023**"
+date: "2023-10-24"
+---
+
+## About
+
+[![](r_pharma_logo.png)](https://rinpharma.com/)
+
+This repository hosts the quarto revealjs presentation of the `smdi` package presented at the **R/Pharma conference 2023**
+
+## Presentation Details
+
+-   Title: `Introducing smdi: An R package to perform structural missing data investigations for real-world evidence studies`
+-   ID: NESS2023-IS-20
+-   Date: October 24-26
+-   Venue: <https://rinpharma.com/>
+
+The presentation can be accessed at:
+
+-   Vignettes/tutorials: [janickweberpals.gitlab-pages.partners.org/smdi](https://janickweberpals.gitlab-pages.partners.org/smdi)
+
+-   Presentation repository: <https://gitlab-scm.partners.org/drugepi/smdi-r-pharma-2023>
+
+-   Presentation slides: [drugepi.gitlab-pages.partners.org/smdi-r-pharma-2023/smdi-r-pharma-2023.html](drugepi.gitlab-pages.partners.org/smdi-r-pharma-2023/smdi-r-pharma-2023.html#/title-slide)
+
+## Abstract
+
+Real-world data are increasingly used to complement evidence from clinical trials. However, missing data are a major statistical challenge when the underlying missingness mechanisms are unknown, e.g., to adjust for confounding. This talk introduces the smdi R package, which aims to streamline routine missing data investigations of partially observed confounders based on a suite of three group diagnostics. The structural missingness assumptions were recently validated in a simulation study and are characterized through M-graphs of realistic relationships between a partially observed confounder and its association with an exposure, outcome and other fully observed covariates. Aiming to differentiate between different missingness mechanisms, the package implements three group diagnostics to 1) compare distributions between patients with and without the partially observed confounder, 2) asses the ability to predict missingness based on observed covariates, and 3) examine if missingness is associated with the outcome under study. As a result, combining all group diagnostics can give guidance on how the underlying missingness for partially observed confounders could be characterized and approached in downstream analyses.
+
+## Dependencies
+
+R package dependencies are managed through the `renv` package. All packages and their versions can be viewed in the lockfile `renv.lock`. All required packages and the appropriate versions can be installed by running the following command:
+
+```{r, eval=FALSE}
+renv::restore()
+```
+
+## Directory overview
+
+```{r, echo=FALSE}
+fs::dir_tree(recurse = 1)
+```
+
+```{r, include=FALSE, eval=FALSE}
+rmarkdown::render(input = "README.Rmd", output_format = "md_document")
+```

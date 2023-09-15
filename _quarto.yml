@@ -1,0 +1,5 @@
+project:
+  title: "`smdi` at R/Pharma 2023"
+  output-dir: public
+  post-render: 
+  - update_README.R
