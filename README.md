@@ -1,6 +1,5 @@
 ## About
 
-\[![](smdi_hexagon.png)\]
 [![](r_pharma_logo.png)](https://rinpharma.com/)
 
 This repository hosts the quarto revealjs presentation of the `smdi`
@@ -23,7 +22,7 @@ The presentation and more materials can be accessed at:
 
 -   Presentation repository:
 
-    -   [gitlab-scm.partners.org/drugepi/NESS2023](https://gitlab-scm.partners.org/drugepi/smdi-r-pharma-2023)
+    -   [gitlab-scm.partners.org/drugepi/smdi-r-pharma-2023](https://gitlab-scm.partners.org/drugepi/smdi-r-pharma-2023)
     -   [github.com/janickweberpals/smdi-R-Pharma2023](https://github.com/janickweberpals/smdi-R-Pharma2023)
 
 ## Abstract

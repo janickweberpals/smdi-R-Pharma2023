@@ -369,7 +369,7 @@ devtools::install_git("https://gitlab-scm.partners.org/janickweberpals/smdi.git"
 -   Presentation slides: [drugepi.gitlab-pages.partners.org/smdi-r-pharma-2023/smdi-r-pharma2023.html](https://drugepi.gitlab-pages.partners.org/smdi-r-pharma-2023/smdi-r-pharma2023.html)
 
 -   Presentation repository: 
-    -   [gitlab-scm.partners.org/drugepi/NESS2023](https://gitlab-scm.partners.org/drugepi/smdi-r-pharma-2023)
+    -   [gitlab-scm.partners.org/drugepi/smdi-r-pharma-2023](https://gitlab-scm.partners.org/drugepi/smdi-r-pharma-2023)
     -   [github.com/janickweberpals/smdi-R-Pharma2023](https://github.com/janickweberpals/smdi-R-Pharma2023)
 
 ## Acknowledgments
