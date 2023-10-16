@@ -73,7 +73,7 @@ These covariates are often just partially observed for various reasons:
 
 ## Knowledge gaps and objectives
 
-Missing data in confounding factors are frequent
+Missing data in EHR confounding factors are frequent
 
 ::: callout-note
 # Two common missing data taxonomies
@@ -113,7 +113,7 @@ Unresolved challenges for `causal inference`:
 # Observations
 
 -   Large scale simulation revealed characteristic patterns of the diagnostic parameters matched to missing data structure
--   The observed diagnostic pattern of a specific study will give insights into the likelihood of underlying missingness structures
+-   The observed diagnostic pattern of a specific study will give insights into the likelihood of underlying EHR missingness structures
 :::
 
 ![Plasmode simulation results averaged across all scenarios and simulated datasets.](images/results.png){fig-align="center"}
@@ -366,7 +366,7 @@ devtools::install_git("https://gitlab-scm.partners.org/janickweberpals/smdi.git"
 
 -   Website (vignettes/articles): [janickweberpals.gitlab-pages.partners.org/smdi](https://janickweberpals.gitlab-pages.partners.org/smdi)
 
--   Presentation slides: [drugepi.gitlab-pages.partners.org/smdi-r-pharma-2023/smdi-r-pharma2023.html](https://drugepi.gitlab-pages.partners.org/smdi-r-pharma-2023/smdi-r-pharma2023.html)
+-   Presentation slides: [drugepi.gitlab-pages.partners.org/smdi-r-pharma-2023/smdi-r-pharma2023.html](https://drugepi.gitlab-pages.partners.org/smdi-r-pharma-2023/smdi-r-pharma2023.html#/title-slide)
 
 -   Presentation repository: 
     -   [gitlab-scm.partners.org/drugepi/smdi-r-pharma-2023](https://gitlab-scm.partners.org/drugepi/smdi-r-pharma-2023)
@@ -413,7 +413,7 @@ devtools::install_git("https://gitlab-scm.partners.org/janickweberpals/smdi.git"
 -   Fang Tian
 -   Wei Liu
 -   Hana Lee
--   Jenni Li
+-   Jie Li
 -   José J. Hernández-Muñoz
 :::
 
