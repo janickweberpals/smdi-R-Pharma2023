@@ -1,7 +1,7 @@
 ---
 title: "`smdi`"
 subtitle: "An R package to perform structural missing data investigations for real-world evidence studies"
-date: "October 24, 2023"
+date: "October 26, 2023"
 date-format: long
 author:
   - name: Janick Weberpals, RPh, PhD
