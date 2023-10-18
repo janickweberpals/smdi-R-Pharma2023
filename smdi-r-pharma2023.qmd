@@ -413,7 +413,7 @@ devtools::install_git("https://gitlab-scm.partners.org/janickweberpals/smdi.git"
 -   Fang Tian
 -   Wei Liu
 -   Hana Lee
--   Jie Li
+-   Jie (Jenni) Li
 -   José J. Hernández-Muñoz
 :::
 

@@ -79,7 +79,6 @@ running the following command:
     ## ├── renv
     ## │   ├── activate.R
     ## │   ├── library
-    ## │   ├── sandbox
     ## │   ├── settings.dcf
     ## │   ├── settings.json
     ## │   └── staging
